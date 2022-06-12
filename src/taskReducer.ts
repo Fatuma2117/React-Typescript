@@ -1,4 +1,4 @@
-
+import {Action} from "./actions"
 
 
 export interface taskState {
@@ -9,7 +9,6 @@ const initialState = {
   task: []
 }
 
-type Action = {type: "ADD_TASK" , payload: string}
 
 
 export const taskReducer = (state:taskState = initialState, action: Action) => {

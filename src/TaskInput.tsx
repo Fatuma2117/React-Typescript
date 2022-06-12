@@ -19,13 +19,14 @@ export const NewTaskInput: React.FC<NewTaskInputProps> = ({ addTask }) => {
   return (
     <div>
       <input
+      className="todo-input"
         onChange={updateTask}
         value={task}
         type="text"
         name="task"
         placeholder="Task"
       />
-      <button onClick={onAddTaskClick}>Add Task</button>
+      <button className="todo-button" onClick={onAddTaskClick}>Add Task</button>
     </div>
   );
 };

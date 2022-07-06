@@ -1,31 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-import { NewTaskInput } from "./TaskInput";
-import { useSelector, useDispatch } from "react-redux";
-import { taskState } from "./taskReducer";
-import { addTask } from "./actions";
+import { TodoForm } from "./Form";
+import { TodoList } from "./List";
 
 function App() {
-  const tasks = useSelector<taskState, taskState["task"]>(
-    (state) => state.task
-  );
+  const [todos, setTodos] = useState<Array<Todo>>([]);
 
-  const dispatch = useDispatch();
-
-  const onAddTask = (task: string) => {
-    dispatch(addTask(task));
+  const addTodo: AddTodo = (newTodo) => {
+    if (newTodo !== "") {
+      setTodos([...todos, { text: newTodo, complete: false }]);
+    }
   };
-  return (
-    <div className="todo-app">
-      <h1>Todo List: </h1>
-      <NewTaskInput addTask={onAddTask} />
 
-      <ul>
-        {tasks.map((task) => {
-          return <li key={task}>{task}</li>;
-        })}
-      </ul>
+  const toggleComplete: ToggleComplete = (clickedTodo) => {
+    const completedTodos = todos.map((todo) => {
+      if (todo === clickedTodo) {
+        return { ...todo, complete: !todo.complete };
+      }
+      return todo;
+    });
+    setTodos(completedTodos);
+  };
+
+  return (
+    <div className="todo">
+      <header>
+        <h1>To Do List: </h1>
+      </header>
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} toggleComplete={toggleComplete} />
     </div>
   );
 }
